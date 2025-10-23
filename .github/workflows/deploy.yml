@@ -12,6 +12,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug host variable
+        run: |
+          if [ -z "${{ secrets.EC2_HOST }}" ]; then
+            echo "⚠️ EC2_HOST is missing!"
+            exit 1
+          else
+            echo "✅ EC2_HOST is set (value hidden)."
+          fi
+
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
